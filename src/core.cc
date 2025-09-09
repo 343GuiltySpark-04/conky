@@ -34,7 +34,6 @@
 #include "core.h"
 
 #include "build.h"
-#include "lua/colour-settings.hh"
 #include "content/colours.hh"
 #include "content/combine.h"
 #include "content/text_object.h"
@@ -45,6 +44,7 @@
 #include "data/hardware/i8k.h"
 #include "data/misc.h"
 #include "data/proc.h"
+#include "lua/colour-settings.hh"
 #ifdef BUILD_IMLIB2
 #include "conky-imlib2.h"
 #endif /* BUILD_IMLIB2 */
@@ -112,6 +112,9 @@
 #ifdef BUILD_INTEL_BACKLIGHT
 #include "data/hardware/intel_backlight.h"
 #endif /* BUILD_INTEL_BACKLIGHT */
+// #ifdef BUILD_COUNTDOWN
+#include "data/countdown.h"
+// #endif // BUILD_COUNTDOWN
 
 /* check for OS and include appropriate headers */
 #if defined(__linux__)
@@ -434,7 +437,7 @@ struct text_object *construct_text_object(char *s, const char *arg, long line,
   obj->callbacks.free = &gen_free_opaque;
   END
 #endif /* !__OpenBSD__ */
-  OBJ(freq, nullptr) get_cpu_count();
+      OBJ(freq, nullptr) get_cpu_count();
   if ((arg == nullptr) || strlen(arg) >= 3 ||
       strtol(&arg[0], nullptr, 10) == 0 ||
       static_cast<unsigned int>(strtol(&arg[0], nullptr, 10)) >
@@ -1370,9 +1373,13 @@ struct text_object *construct_text_object(char *s, const char *arg, long line,
   END OBJ_ARG(pid_fsgid, nullptr, "pid_fsgid needs a pid as argument")
       extract_object_args_to_sub(obj, arg);
   obj->callbacks.print = &print_pid_fsgid;
+  
+  
   END OBJ_ARG(gid_name, nullptr, "gid_name needs a gid as argument")
       extract_object_args_to_sub(obj, arg);
   obj->callbacks.print = &print_gid_name;
+
+
   END OBJ_ARG(uid_name, nullptr, "uid_name needs a uid as argument")
       extract_object_args_to_sub(obj, arg);
   obj->callbacks.print = &print_uid_name;
@@ -2032,6 +2039,14 @@ struct text_object *construct_text_object(char *s, const char *arg, long line,
   obj->callbacks.free = &free_intel_backlight;
   init_intel_backlight(obj);
 #endif /* BUILD_INTEL_BACKLIGHT */
+
+
+  END OBJ(countdown, 0) obj->data.l = atol(arg);
+    obj->callbacks.print = &print_countdown;
+  //parse_countdown(obj);
+
+
+
   END {
     auto *buf = static_cast<char *>(malloc(text_buffer_size.get(*state)));
 

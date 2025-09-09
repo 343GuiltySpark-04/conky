@@ -86,6 +86,8 @@ set(conky_sources
   data/entropy.h
   data/exec.cc
   data/exec.h
+  data/countdown.cc
+  data/countdown.h
   data/fs.cc
   data/fs.h
   content/gradient.cc

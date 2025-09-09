@@ -298,6 +298,8 @@ option(BUILD_PULSEAUDIO
 
 option(BUILD_INTEL_BACKLIGHT
   "Enable support for Intel backlight" false)
+option(BUILD_COUNTDOWN
+  "Enable building of the countdown timer" true)
 
 run_dependency_checks()
 

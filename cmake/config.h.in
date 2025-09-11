@@ -94,6 +94,8 @@
 
 #cmakedefine BUILD_IMLIB2 1
 
+#cmakedefine BUILD_JINJU 1
+
 #cmakedefine BUILD_MATH 1
 
 #cmakedefine BUILD_BUILTIN_CONFIG 1

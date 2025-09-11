@@ -111,6 +111,8 @@ const std::vector<std::string> settings_ordering{
     "double_buffer",
     "out_to_wayland",
     "imlib_cache_size",
+    "email",
+    "pwd",
 };
 
 // returns a vector of all settings, sorted in order of registration

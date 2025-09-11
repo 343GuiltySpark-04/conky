@@ -640,6 +640,14 @@ if(BUILD_PULSEAUDIO)
   set(conky_includes ${conky_includes} ${PULSEAUDIO_INCLUDE_DIRS})
 endif(BUILD_PULSEAUDIO)
 
+if(BUILD_JINJU)
+  pkg_check_modules(VMIME REQUIRED vmime)
+  set(conk_libs ${conk_libs} ${VMIME_LINK_LIBRARIES})
+  set(conky_includes ${conky_includes} ${VMIME_INCLUDE_DIRS})
+endif(BUILD_JINJU)
+
+
+
 if(WANT_CURL)
   pkg_check_modules(CURL REQUIRED libcurl)
   set(conky_libs ${conky_libs} ${CURL_LINK_LIBRARIES})

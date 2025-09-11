@@ -112,9 +112,9 @@
 #ifdef BUILD_INTEL_BACKLIGHT
 #include "data/hardware/intel_backlight.h"
 #endif /* BUILD_INTEL_BACKLIGHT */
-// #ifdef BUILD_COUNTDOWN
-#include "data/countdown.h"
-// #endif // BUILD_COUNTDOWN
+// #ifdef BUILD_JINJU
+#include "data/jinju.h"
+// #endif // BUILD_JINJU
 
 /* check for OS and include appropriate headers */
 #if defined(__linux__)
@@ -1373,12 +1373,10 @@ struct text_object *construct_text_object(char *s, const char *arg, long line,
   END OBJ_ARG(pid_fsgid, nullptr, "pid_fsgid needs a pid as argument")
       extract_object_args_to_sub(obj, arg);
   obj->callbacks.print = &print_pid_fsgid;
-  
-  
+
   END OBJ_ARG(gid_name, nullptr, "gid_name needs a gid as argument")
       extract_object_args_to_sub(obj, arg);
   obj->callbacks.print = &print_gid_name;
-
 
   END OBJ_ARG(uid_name, nullptr, "uid_name needs a uid as argument")
       extract_object_args_to_sub(obj, arg);
@@ -2040,12 +2038,16 @@ struct text_object *construct_text_object(char *s, const char *arg, long line,
   init_intel_backlight(obj);
 #endif /* BUILD_INTEL_BACKLIGHT */
 
-
   END OBJ(countdown, 0) obj->data.l = atol(arg);
-    obj->callbacks.print = &print_countdown;
-  //parse_countdown(obj);
+  obj->callbacks.print = &print_countdown;
 
+  END OBJ(apt_installed, 0) obj->callbacks.print = &print_apt_installed;
 
+  END OBJ(apt_upgradable, 0) obj->callbacks.print = &print_apt_upgradable;
+
+  END OBJ(apt_local, 0) obj->callbacks.print = &print_apt_local;
+
+  END OBJ(unread_pmail, 0) obj->callbacks.print = &print_unread_mail;
 
   END {
     auto *buf = static_cast<char *>(malloc(text_buffer_size.get(*state)));

@@ -86,8 +86,8 @@ set(conky_sources
   data/entropy.h
   data/exec.cc
   data/exec.h
-  data/countdown.cc
-  data/countdown.h
+  data/jinju.cc
+  data/jinju.h
   data/fs.cc
   data/fs.h
   content/gradient.cc
@@ -461,7 +461,17 @@ if(BUILD_TESTING)
 else()
   add_executable(conky main.cc ${conky_sources} ${optional_sources})
   add_dependencies(conky generated_hdr_files)
-  target_link_libraries(conky ${conky_libs})
+  #target_link_libraries(conky ${conky_libs})
+  # Find VMime using pkg-config
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(VMIME REQUIRED vmime)
+
+# Add the include directories (headers)
+#target_include_directories(conky PRIVATE ${VMIME_INCLUDE_DIRS})
+
+# Link the actual library
+target_link_libraries(conky PRIVATE ${VMIME_LIBRARIES} ${conky_libs})
+
 endif()
 
 install(TARGETS conky
